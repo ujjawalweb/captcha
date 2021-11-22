@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="styles.css">
+  
+  <style>
+
+#captchaBackground {
+  height: 200px;
+  width: 250px;
+  background-color: #7b807f;
+  background-image: url("https://www.transparenttextures.com/patterns/light-toast.png");
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+#captcha {
+  margin-bottom: 1em;
+  font-size: 30px;
+  letter-spacing: 3px;
+}
+.center {
+display: flex;
+flex-direction: column;
+align-items: center;
+}
+#submit {
+  margin-top: 2em;
+  margin-bottom: 2em;
+}
+#textBox {
+  height: 25px;
+}
+.redText {
+  color: #a03146;
+  font-weight: bold;
+}
+.greenText {
+  color: #1a3815;
+  font-weight: bold;
+}
+
+
+  </style>
+</head>
+  <body>
+<div class="center">
+    <h1>Captcha</h1>
+    <div id="captchaBackground">
+      <span id="captcha">captcha text</span>
+      <input id="textBox" type="text" name="text">
+      <div id="buttons">
+        <input id="submit" type="submit">
+        <button id="refresh" type="submit">Refresh</button>
+      </div> 
+      <span id="output"></span>
+    </div>
+  </div>
+
+</body>
+<script src="app.js"></script>
+
+<script>
+let captchaText = document.querySelector('#captcha');
+let userText = document.querySelector('#textBox');
+let submitButton = document.querySelector('#submit');
+let output = document.querySelector('#output');
+let refreshButton = document.querySelector('#refresh');
+
+let alphaNums = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+let emptyArr = [];
+for(let i = 1; i <= 7; i++) {
+	emptyArr.push(alphaNums[Math.floor(Math.random() * alphaNums.length)]);
+}
+captchaText.innerHTML = emptyArr.join('');
+
+userText.addEventListener('keyup', function(e) {
+	if(e.keyCode === 13) {
+		if(userText.value === captchaText.innerHTML) {
+			output.classList.add("greenText");
+			output.innerHTML = "Correct!";
+		} else {
+			output.classList.add("redText");
+			output.innerHTML = "Incorrect, please try again";
+		}
+	}
+});
+
+submitButton.addEventListener('click',  function() {
+	if(userText.value === captchaText.innerHTML) {
+		output.classList.add("greenText");
+		output.innerHTML = "Correct!";
+	} else {
+		output.classList.add("redText");
+		output.innerHTML = "Incorrect, please try again";
+	}
+});
+
+refreshButton.addEventListener('click', function () {
+	userText.value = "";
+	let refreshArr = [];
+	for(let j = 1; j <= 7; j++) {
+		refreshArr.push(alphaNums[Math.floor(Math.random() * alphaNums.length)]);
+	}
+	captchaText.innerHTML = refreshArr.join('');
+	output.innerHTML = "";
+});
+
+submitButton.addEventListener('keyup', function(e) {
+	if(e.keyCode === 13) {
+	if(userText.value === captchaText.innerHTML) {
+		console.log("correct!");
+		output.classList.add("greenText");
+		output.innerHTML = "Correct!";
+	} else {
+		output.classList.add("redText");
+		output.innerHTML = "Incorrect, please try again";
+	}
+	}
+});
+
+
+</script>
+
+  </body>
+</html>
